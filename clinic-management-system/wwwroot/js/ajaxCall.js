@@ -20,9 +20,7 @@ async function fetchData() {
 
         patients.forEach(patient => {
             patientList.innerHTML += `<option value="${patient.id}">${patient.name} ${patient.surname}</option>`
-        });
-
-        console.log(list);  
+        }); 
         
     } catch (error) {
         console.error("Failed to fetch data: ", error);
