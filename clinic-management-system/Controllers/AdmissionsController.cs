@@ -49,11 +49,18 @@ namespace clinic_management_system.Controllers
             return View();
         }
 
-        //GET: Admissions/Fetch
-        public IActionResult Fetch()
+        //GET: Admissions/Doctors
+        public IActionResult Doctors()
         {
             var doctors = _context.Doctors.ToList();
             return Json(doctors);
+        }
+
+        //GET: Admissions/Patients
+        public IActionResult Patients()
+        {
+            var patients = _context.Patients.ToList();
+            return Json(patients);
         }
 
         // POST: Admissions/Create
