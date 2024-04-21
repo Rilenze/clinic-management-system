@@ -11,7 +11,8 @@ namespace clinic_management_system.Models
         public string ReportDescription { get; set; }
         [Required]
         public DateTime CreationDate { get; set; } = DateTime.Now;
-        [ForeignKey("Admission")]
         public int AdmissionId { get; set; }
+        [ForeignKey(nameof(AdmissionId))]
+        public Admission Admission { get; set; }
     }
 }

@@ -44,6 +44,10 @@ namespace clinic_management_system.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("PatientId");
+
                     b.ToTable("Admissions");
                 });
 
@@ -96,6 +100,8 @@ namespace clinic_management_system.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AdmissionId");
+
                     b.ToTable("MedicalReports");
                 });
 
@@ -133,6 +139,36 @@ namespace clinic_management_system.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Patients");
+                });
+
+            modelBuilder.Entity("clinic_management_system.Models.Admission", b =>
+                {
+                    b.HasOne("clinic_management_system.Models.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("clinic_management_system.Models.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("clinic_management_system.Models.MedicalReport", b =>
+                {
+                    b.HasOne("clinic_management_system.Models.Admission", "Admission")
+                        .WithMany()
+                        .HasForeignKey("AdmissionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Admission");
                 });
 #pragma warning restore 612, 618
         }
