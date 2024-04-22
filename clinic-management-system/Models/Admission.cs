@@ -11,10 +11,10 @@ namespace clinic_management_system.Models
         public DateTime AdmissionDateTime { get; set; }
         public int PatientId { get; set; }
         [ForeignKey(nameof(PatientId))]
-        public Patient Patient { get; set; }
+        public Patient? Patient { get; set; }
         public int DoctorId { get; set; }
         [ForeignKey(nameof(DoctorId))]
-        public Doctor Doctor { get; set; }
+        public Doctor? Doctor { get; set; }
         public bool Urgency { get; set; }
     }
 }

@@ -7,22 +7,22 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New Admission</a>
+    <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                Patient full name
+                @Html.DisplayNameFor(model => model.AdmissionDateTime)
             </th>
             <th>
-                Admission date and time
+                @Html.DisplayNameFor(model => model.Patient)
             </th>
             <th>
-                Competent doctor
+                @Html.DisplayNameFor(model => model.Doctor)
             </th>
             <th>
-                Urgency
+                @Html.DisplayNameFor(model => model.Urgency)
             </th>
             <th></th>
         </tr>
@@ -31,13 +31,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.PatientId)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.AdmissionDateTime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DoctorId)
+                @Html.DisplayFor(modelItem => item.Patient.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Doctor.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Urgency)

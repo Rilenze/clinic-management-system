@@ -22,7 +22,8 @@ namespace clinic_management_system.Controllers
         // GET: Admissions
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Admissions.ToListAsync());
+            var applicationDbContext = _context.Admissions.Include(a => a.Doctor).Include(a => a.Patient);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Admissions/Details/5
@@ -34,6 +35,8 @@ namespace clinic_management_system.Controllers
             }
 
             var admission = await _context.Admissions
+                .Include(a => a.Doctor)
+                .Include(a => a.Patient)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (admission == null)
             {
@@ -46,21 +49,9 @@ namespace clinic_management_system.Controllers
         // GET: Admissions/Create
         public IActionResult Create()
         {
+            ViewData["DoctorId"] = new SelectList(_context.Doctors, "Id", "Name");
+            ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Name");
             return View();
-        }
-
-        //GET: Admissions/Doctors
-        public IActionResult Doctors()
-        {
-            var doctors = _context.Doctors.ToList();
-            return Json(doctors);
-        }
-
-        //GET: Admissions/Patients
-        public IActionResult Patients()
-        {
-            var patients = _context.Patients.ToList();
-            return Json(patients);
         }
 
         // POST: Admissions/Create
@@ -70,12 +61,15 @@ namespace clinic_management_system.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,AdmissionDateTime,PatientId,DoctorId,Urgency")] Admission admission)
         {
+
             if (ModelState.IsValid)
             {
                 _context.Add(admission);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["DoctorId"] = new SelectList(_context.Doctors, "Id", "Code", admission.DoctorId);
+            ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Gender", admission.PatientId);
             return View(admission);
         }
 
@@ -92,6 +86,8 @@ namespace clinic_management_system.Controllers
             {
                 return NotFound();
             }
+            ViewData["DoctorId"] = new SelectList(_context.Doctors, "Id", "Code", admission.DoctorId);
+            ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Gender", admission.PatientId);
             return View(admission);
         }
 
@@ -127,6 +123,8 @@ namespace clinic_management_system.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["DoctorId"] = new SelectList(_context.Doctors, "Id", "Code", admission.DoctorId);
+            ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Gender", admission.PatientId);
             return View(admission);
         }
 
@@ -139,6 +137,8 @@ namespace clinic_management_system.Controllers
             }
 
             var admission = await _context.Admissions
+                .Include(a => a.Doctor)
+                .Include(a => a.Patient)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (admission == null)
             {
