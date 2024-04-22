@@ -71,8 +71,10 @@ namespace clinic_management_system.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DoctorId"] = new SelectList(_context.Doctors, "Id", "Code", admission.DoctorId);
-            ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Gender", admission.PatientId);
+            ViewData["doctors"] = _context.Doctors;
+            ViewData["patients"] = _context.Patients;
+            //ViewData["DoctorId"] = new SelectList(_context.Doctors, "Id", "Code", admission.DoctorId);
+            //ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Gender", admission.PatientId);
             return View(admission);
         }
 
