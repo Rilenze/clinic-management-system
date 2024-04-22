@@ -22,7 +22,7 @@
                 @* <label asp-for="PatientId" class="control-label"></label>
                 <select asp-for="PatientId" class ="form-control" asp-items="ViewBag.PatientId"></select> *@
                 <label asp-for="PatientId" class="control-label"></label>
-                <select asp-for="PatientId" class="form-control">
+                <select asp-for="PatientId" class="form-select">
                     @foreach (var patient in ViewBag.patients)
                     {
                         <option value="@patient.Id">@patient.Name @patient.Surname</option>
@@ -33,7 +33,7 @@
                 @* <label asp-for="DoctorId" class="control-label"></label>
                 <select asp-for="DoctorId" class ="form-control" asp-items="ViewBag.DoctorId"></select> *@
                 <label asp-for="DoctorId" class="control-label">The competent doctor</label>
-                <select asp-for="DoctorId" class="form-control">
+                <select asp-for="DoctorId" class="form-select">
                     @foreach (var doctor in ViewBag.doctors)
                     {
                         <option value="@doctor.Id">@doctor.Name @doctor.Surname - @doctor.Code</option>

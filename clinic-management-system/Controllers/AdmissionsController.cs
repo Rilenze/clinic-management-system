@@ -49,8 +49,11 @@ namespace clinic_management_system.Controllers
         // GET: Admissions/Create
         public IActionResult Create()
         {
-            ViewData["doctors"] = _context.Doctors;
-            ViewData["patients"] = _context.Patients;
+            ViewData["doctors"] = _context.Doctors.Where(d => d.Title == "Specialist").ToList();
+            var filteredPatients = _context.Patients
+                .Where(p => !_context.Admissions.Any(a => a.PatientId == p.Id))
+                .ToList();
+            ViewData["patients"] = filteredPatients;
 
             //ViewData["DoctorId"] = new SelectList(_context.Doctors, "Id", "Name");
             //ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Name");
@@ -91,8 +94,12 @@ namespace clinic_management_system.Controllers
             {
                 return NotFound();
             }
-            ViewData["doctors"] = _context.Doctors;
-            ViewData["patients"] = _context.Patients;
+
+            ViewData["doctors"] = _context.Doctors.Where(d => d.Title == "Specialist").ToList();
+            var filteredPatients = _context.Patients
+                .Where(p => !_context.Admissions.Any(a => a.PatientId == p.Id && p.Id != admission.PatientId))
+                .ToList();
+            ViewData["patients"] = filteredPatients;
             //ViewData["DoctorId"] = new SelectList(_context.Doctors, "Id", "Code", admission.DoctorId);
             //ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Gender", admission.PatientId);
             return View(admission);
