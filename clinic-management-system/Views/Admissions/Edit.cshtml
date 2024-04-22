@@ -19,14 +19,30 @@
                 <span asp-validation-for="AdmissionDateTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PatientId" class="control-label"></label>
+                @* <label asp-for="PatientId" class="control-label"></label>
                 <select asp-for="PatientId" class="form-control" asp-items="ViewBag.PatientId"></select>
-                <span asp-validation-for="PatientId" class="text-danger"></span>
+                <span asp-validation-for="PatientId" class="text-danger"></span> *@
+
+                <label asp-for="PatientId" class="control-label"></label>
+                <select asp-for="PatientId" class="form-control">
+                    @foreach (var patient in ViewBag.patients)
+                    {
+                        <option value="@patient.Id">@patient.Name @patient.Surname</option>
+                    }
+                </select>
             </div>
             <div class="form-group">
-                <label asp-for="DoctorId" class="control-label"></label>
+                @* <label asp-for="DoctorId" class="control-label"></label>
                 <select asp-for="DoctorId" class="form-control" asp-items="ViewBag.DoctorId"></select>
-                <span asp-validation-for="DoctorId" class="text-danger"></span>
+                <span asp-validation-for="DoctorId" class="text-danger"></span> *@
+
+                <label asp-for="DoctorId" class="control-label">The competent doctor</label>
+                <select asp-for="DoctorId" class="form-control">
+                    @foreach (var doctor in ViewBag.doctors)
+                    {
+                        <option value="@doctor.Id">@doctor.Name @doctor.Surname - @doctor.Code</option>
+                    }
+                </select>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
