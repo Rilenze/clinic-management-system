@@ -49,8 +49,11 @@ namespace clinic_management_system.Controllers
         // GET: Admissions/Create
         public IActionResult Create()
         {
-            ViewData["DoctorId"] = new SelectList(_context.Doctors, "Id", "Name");
-            ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Name");
+            ViewData["doctors"] = _context.Doctors;
+            ViewData["patients"] = _context.Patients;
+
+            //ViewData["DoctorId"] = new SelectList(_context.Doctors, "Id", "Name");
+            //ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Name");
             return View();
         }
 
