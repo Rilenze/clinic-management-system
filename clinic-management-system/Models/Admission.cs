@@ -20,5 +20,8 @@ namespace clinic_management_system.Models
         [ForeignKey(nameof(DoctorId))]
         public Doctor? Doctor { get; set; }
         public bool Urgency { get; set; }
+        public int? MedicalReportId {  get; set; }
+        [ForeignKey(nameof(MedicalReportId))]
+        public MedicalReport? MedicalReport { get; set; }
     }
 }
