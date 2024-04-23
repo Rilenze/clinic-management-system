@@ -168,11 +168,18 @@ namespace clinic_management_system.Controllers
             var medicalReport = await _context.MedicalReports.FindAsync(id);
             if (medicalReport != null)
             {
+                var admission = await _context.Admissions.FirstOrDefaultAsync(a => a.Id == medicalReport.AdmissionId);
+                admission.MedicalReportId = null;
+                _context.Admissions.Update(admission);
+                await _context.SaveChangesAsync();
+
                 _context.MedicalReports.Remove(medicalReport);
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            return RedirectToAction("Index", controllerName: "Admissions");
+
         }
 
         private bool MedicalReportExists(int id)
