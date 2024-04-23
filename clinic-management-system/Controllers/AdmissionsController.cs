@@ -26,16 +26,20 @@ namespace clinic_management_system.Controllers
         // GET: Admissions
         public async Task<IActionResult> Index(DateTime? fromDate, DateTime? toDate)
         {
-            var admissions = _context.Admissions.Include(a => a.Doctor).Include(a => a.Patient);
+            var admissions = _context.Admissions
+                .Include(a => a.Doctor)
+                .Include(a => a.Patient)
+                .OrderBy(a => a.AdmissionDateTime);
 
             if (fromDate != null && toDate != null)
             {
                 var admissions2 = _context.Admissions
                     .Include(a => a.Doctor).Include(a => a.Patient)
-                    .Where(a => a.AdmissionDateTime >= fromDate && a.AdmissionDateTime <= toDate);
+                    .Where(a => a.AdmissionDateTime >= fromDate && a.AdmissionDateTime <= toDate)
+                    .OrderBy(a => a.AdmissionDateTime);
                 return View(await admissions2.ToListAsync());
             }
-
+            
             return View(await admissions.ToListAsync());
         }
 
