@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace clinic_management_system.Models
 {
@@ -12,10 +13,12 @@ namespace clinic_management_system.Models
         [Required]
         public string Surname { get; set; }
         [Required]
+        [DisplayName("Birth date")]
         public DateTime DateOfBirth { get; set; }
         [Required]
         public string Gender { get; set; }
         public string? Address { get; set; }
+        [DisplayName("Phone number")]
         public string? PhoneNumber { get; set; }
     }
 }
