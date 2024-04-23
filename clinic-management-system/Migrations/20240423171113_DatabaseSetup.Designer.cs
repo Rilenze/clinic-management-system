@@ -12,7 +12,7 @@ using clinic_management_system.Data;
 namespace clinic_management_system.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240422162612_DatabaseSetup")]
+    [Migration("20240423171113_DatabaseSetup")]
     partial class DatabaseSetup
     {
         /// <inheritdoc />
@@ -122,7 +122,6 @@ namespace clinic_management_system.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateOfBirth")
@@ -137,7 +136,6 @@ namespace clinic_management_system.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Surname")
