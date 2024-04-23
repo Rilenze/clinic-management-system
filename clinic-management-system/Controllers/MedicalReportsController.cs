@@ -20,14 +20,19 @@ namespace clinic_management_system.Controllers
         }
 
         // GET: MedicalReports
-        public async Task<IActionResult> Index(int? id)
+        public async Task<IActionResult> Index(int admissionId, int? medicalReportId)
         {
-            if (id == null)
+            if (medicalReportId != null)
             {
-                return NotFound();
+                return RedirectToAction("Edit", new { id = admissionId });
             }
-            var applicationDbContext = _context.MedicalReports.Include(m => m.Admission);
-            return View(await applicationDbContext.ToListAsync());
+            else
+            {
+                return RedirectToAction("Create", new { id = admissionId });
+            }
+
+            //var applicationDbContext = _context.MedicalReports.Include(m => m.Admission);
+            //return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: MedicalReports/Details/5
@@ -50,9 +55,11 @@ namespace clinic_management_system.Controllers
         }
 
         // GET: MedicalReports/Create
-        public IActionResult Create()
+        public IActionResult Create(int id)
         {
-            ViewData["AdmissionId"] = new SelectList(_context.Admissions, "Id", "Id");
+
+            ViewData["AdmissionId"] = id;
+            //ViewData["AdmissionId"] = new SelectList(_context.Admissions, "Id", "Id", medicalReport.AdmissionId);
             return View();
         }
 
@@ -61,15 +68,22 @@ namespace clinic_management_system.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ReportDescription")] MedicalReport medicalReport)
+        public async Task<IActionResult> Create(int id, MedicalReport medicalReport)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(medicalReport);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                var admission = await _context.Admissions.FindAsync(medicalReport.AdmissionId);
+                admission.MedicalReport = medicalReport;
+
+                _context.Update(admission);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("Index", controllerName: "Admissions");
             }
-            ViewData["AdmissionId"] = new SelectList(_context.Admissions, "Id", "Id", medicalReport.AdmissionId);
+            //ViewData["AdmissionId"] = new SelectList(_context.Admissions, "Id", "Id", medicalReport.AdmissionId);
             return View(medicalReport);
         }
 
@@ -164,5 +178,6 @@ namespace clinic_management_system.Controllers
         {
             return _context.MedicalReports.Any(e => e.Id == id);
         }
+
     }
 }

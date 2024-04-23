@@ -13,6 +13,6 @@ namespace clinic_management_system.Models
         public DateTime CreationDate { get; set; } = DateTime.Now;
         public int AdmissionId { get; set; }
         [ForeignKey(nameof(AdmissionId))]
-        public Admission Admission { get; set; }
+        public Admission? Admission { get; set; }
     }
 }
