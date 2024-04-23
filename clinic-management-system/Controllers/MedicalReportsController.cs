@@ -169,9 +169,12 @@ namespace clinic_management_system.Controllers
             if (medicalReport != null)
             {
                 var admission = await _context.Admissions.FirstOrDefaultAsync(a => a.Id == medicalReport.AdmissionId);
-                admission.MedicalReportId = null;
-                _context.Admissions.Update(admission);
-                await _context.SaveChangesAsync();
+                if (admission != null)
+                {
+                    admission.MedicalReportId = null;
+                    _context.Admissions.Update(admission);
+                    await _context.SaveChangesAsync();
+                }
 
                 _context.MedicalReports.Remove(medicalReport);
             }

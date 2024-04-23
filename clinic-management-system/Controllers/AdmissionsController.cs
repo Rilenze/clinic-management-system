@@ -232,7 +232,7 @@ namespace clinic_management_system.Controllers
             if (admission.MedicalReportId != null)
             {
                 var medicalReport = _context.MedicalReports.Find(admission.MedicalReportId);
-                document.Add(new Paragraph($"Date of medical report creation: {medicalReport.CreationDate}"));
+                document.Add(new Paragraph($"Date and time of medical report creation: {medicalReport.CreationDate}"));
                 document.Add(new Paragraph($"Medical report description: {medicalReport.ReportDescription}"));
             }
             document.Close();
