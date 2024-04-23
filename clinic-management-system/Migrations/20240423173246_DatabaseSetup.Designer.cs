@@ -12,7 +12,7 @@ using clinic_management_system.Data;
 namespace clinic_management_system.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240423171113_DatabaseSetup")]
+    [Migration("20240423173246_DatabaseSetup")]
     partial class DatabaseSetup
     {
         /// <inheritdoc />
