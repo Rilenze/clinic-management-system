@@ -62,14 +62,19 @@ namespace clinic_management_system.Controllers
         // GET: Admissions/Create
         public IActionResult Create()
         {
-            ViewData["doctors"] = _context.Doctors.Where(d => d.Title == "Specialist").ToList();
+            var specialistDoctors = _context.Doctors.Where(d => d.Title == "Specialist").ToList();
             var filteredPatients = _context.Patients
                 .Where(p => !_context.Admissions.Any(a => a.PatientId == p.Id))
                 .ToList();
-            ViewData["patients"] = filteredPatients;
 
-            //ViewData["DoctorId"] = new SelectList(_context.Doctors, "Id", "Name");
-            //ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Name");
+            if (filteredPatients.Count == 0 || specialistDoctors.Count == 0)
+            {
+                TempData["AdmissionCreationError"] = "Unable to create admission " +
+                    "because there is no specialist doctor or all patients already have their admission!";
+                return RedirectToAction("Index");
+            }
+            ViewData["doctors"] = specialistDoctors;
+            ViewData["patients"] = filteredPatients;
             return View();
         }
 
