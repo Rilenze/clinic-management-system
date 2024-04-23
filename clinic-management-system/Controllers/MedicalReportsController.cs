@@ -24,7 +24,7 @@ namespace clinic_management_system.Controllers
         {
             if (medicalReportId != null)
             {
-                return RedirectToAction("Edit", new { id = admissionId });
+                return RedirectToAction("Edit", new { id = medicalReportId });
             }
             else
             {
@@ -100,7 +100,7 @@ namespace clinic_management_system.Controllers
             {
                 return NotFound();
             }
-            ViewData["AdmissionId"] = new SelectList(_context.Admissions, "Id", "Id", medicalReport.AdmissionId);
+            //ViewData["AdmissionId"] = new SelectList(_context.Admissions, "Id", "Id", medicalReport.AdmissionId);
             return View(medicalReport);
         }
 
@@ -109,7 +109,7 @@ namespace clinic_management_system.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ReportDescription,CreationDate,AdmissionId")] MedicalReport medicalReport)
+        public async Task<IActionResult> Edit(int id, MedicalReport medicalReport)
         {
             if (id != medicalReport.Id)
             {
@@ -134,9 +134,10 @@ namespace clinic_management_system.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", controllerName: "Admissions");
+
             }
-            ViewData["AdmissionId"] = new SelectList(_context.Admissions, "Id", "Id", medicalReport.AdmissionId);
+            //ViewData["AdmissionId"] = new SelectList(_context.Admissions, "Id", "Id", medicalReport.AdmissionId);
             return View(medicalReport);
         }
 
