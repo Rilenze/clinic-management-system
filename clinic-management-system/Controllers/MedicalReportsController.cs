@@ -57,8 +57,8 @@ namespace clinic_management_system.Controllers
         // GET: MedicalReports/Create
         public IActionResult Create(int id)
         {
-
-            ViewData["AdmissionId"] = id;
+            var admission = _context.Admissions.Find(id);
+            ViewData["Admission"] = admission;
             //ViewData["AdmissionId"] = new SelectList(_context.Admissions, "Id", "Id", medicalReport.AdmissionId);
             return View();
         }

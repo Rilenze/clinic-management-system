@@ -62,9 +62,14 @@
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
                 <a asp-action="Index" asp-route-admissionId="@item.Id" 
                 asp-route-medicalReportId="@item.MedicalReportId"
-                asp-controller="MedicalReports">Add Medical Report</a>
+                asp-controller="MedicalReports">Add Medical Report</a> |
+                <a asp-action="DownloadPDF" asp-route-admissionId="@item.Id">Download PDF</a>
+                @* <button onclick="generatePDF(@item.Id)">Preuzmi PDF</button> *@
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+@* <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="./js/pdfGenerator.js"></script> *@
