@@ -40,7 +40,8 @@ namespace clinic_management_system.Controllers
                     .Include(a => a.Doctor).Include(a => a.Patient)
                     .Where(a => a.AdmissionDateTime >= fromDate && a.AdmissionDateTime <= toDate)
                     .OrderBy(a => a.AdmissionDateTime);
-                return View(await admissions2.ToListAsync());
+                //return View(await admissions2.ToListAsync());
+                return Json(await admissions2.ToListAsync());
             }
             
             return View(await admissions.ToListAsync());

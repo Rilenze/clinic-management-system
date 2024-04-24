@@ -17,7 +17,6 @@
 }
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Index" method="get">
             <div class="form-group">
                 <label for="fromDate">From Date:</label>
                 <input type="date" id="fromDate" name="fromDate" class="form-control" />
@@ -26,8 +25,7 @@
                 <label for="toDate">To Date:</label>
                 <input type="date" id="toDate" name="toDate" class="form-control" />
             </div>
-            <button type="submit" class="btn btn-primary mt-2">Filter</button>
-        </form>
+            <button onclick="filterAdmissions()" class="btn btn-primary mt-2">Filter</button>
     </div>
 </div>
 <table class="table">
@@ -80,5 +78,4 @@
     </tbody>
 </table>
 
-@* <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="./js/pdfGenerator.js"></script> *@
+<script src="./js/filterAdmissions.js"></script> 
