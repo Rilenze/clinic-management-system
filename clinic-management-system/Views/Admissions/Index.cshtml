@@ -46,7 +46,7 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="filterTable">
 @foreach (var item in Model) {
         <tr>
             <td>
@@ -71,7 +71,6 @@
                 asp-route-medicalReportId="@item.MedicalReportId"
                 asp-controller="MedicalReports">Medical Report</a> |
                 <a asp-action="DownloadPDF" asp-route-admissionId="@item.Id">Download PDF</a>
-                @* <button onclick="generatePDF(@item.Id)">Preuzmi PDF</button> *@
             </td>
         </tr>
 }

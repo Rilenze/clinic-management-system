@@ -223,28 +223,6 @@ namespace clinic_management_system.Controllers
             var pdf = new PdfDocument(writer);
             var document = new Document(pdf);
 
-            // Dodavanje podataka o prijemu, pacijentu, i ljekaru u PDF
-            //document.Add(new Paragraph($"Admission date and time: {admission.AdmissionDateTime}"));
-            //if (admission.Urgency) document.Add(new Paragraph($"Urgency: YES"));
-            //document.Add(new Paragraph($"Patient full name: {admission.Patient.Name} {admission.Patient.Surname}"));
-            //document.Add(new Paragraph($"Patient birth date: {admission.Patient.DateOfBirth.ToString("MM/dd/yyyy")}"));
-            //document.Add(new Paragraph($"Patient gender: {admission.Patient.Gender}"));
-            //if (admission.Patient.Address != null)
-            //    document.Add(new Paragraph($"Patient address: {admission.Patient.Address}"));
-            //if (admission.Patient.PhoneNumber != null)
-            //    document.Add(new Paragraph($"Patient phone number: {admission.Patient.PhoneNumber}"));
-            //document.Add(new Paragraph($"Doctor full name: {admission.Doctor.Name} {admission.Doctor.Surname}"));
-            //document.Add(new Paragraph($"Doctor title: {admission.Doctor.Title}"));
-            //document.Add(new Paragraph($"Doctor code: {admission.Doctor.Code}"));
-
-            //if (admission.MedicalReportId != null)
-            //{
-            //    var medicalReport = _context.MedicalReports.Find(admission.MedicalReportId);
-            //    document.Add(new Paragraph($"Date and time of medical report creation: {medicalReport.CreationDate}"));
-            //    document.Add(new Paragraph($"Medical report description: {medicalReport.ReportDescription}"));
-            //}
-            //document.Close();
-
             Paragraph para = new Paragraph("Admission information")
                         .SetFontSize(20f);
             para.GetAccessibilityProperties().SetRole(StandardRoles.H1);
