@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace clinic_management_system.Models
@@ -8,6 +9,7 @@ namespace clinic_management_system.Models
         [Key]
         public int Id { get; set; }
         [Required]
+        [DisplayName("Report description")]
         public string ReportDescription { get; set; }
         [Required]
         public DateTime CreationDate { get; set; } = DateTime.Now;

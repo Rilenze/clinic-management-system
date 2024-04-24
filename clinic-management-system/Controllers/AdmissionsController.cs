@@ -11,6 +11,9 @@ using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
 using Org.BouncyCastle.Asn1.IsisMtt.X509;
+using iText.Kernel.Pdf.Canvas.Draw;
+using iText.Kernel.Colors;
+using iText.Kernel.Pdf.Tagging;
 
 namespace clinic_management_system.Controllers
 {
@@ -220,8 +223,37 @@ namespace clinic_management_system.Controllers
             var document = new Document(pdf);
 
             // Dodavanje podataka o prijemu, pacijentu, i ljekaru u PDF
-            document.Add(new Paragraph($"Admission date and time: {admission.AdmissionDateTime}"));
-            if (admission.Urgency) document.Add(new Paragraph($"Urgency: YES"));
+            //document.Add(new Paragraph($"Admission date and time: {admission.AdmissionDateTime}"));
+            //if (admission.Urgency) document.Add(new Paragraph($"Urgency: YES"));
+            //document.Add(new Paragraph($"Patient full name: {admission.Patient.Name} {admission.Patient.Surname}"));
+            //document.Add(new Paragraph($"Patient birth date: {admission.Patient.DateOfBirth.ToString("MM/dd/yyyy")}"));
+            //document.Add(new Paragraph($"Patient gender: {admission.Patient.Gender}"));
+            //if (admission.Patient.Address != null)
+            //    document.Add(new Paragraph($"Patient address: {admission.Patient.Address}"));
+            //if (admission.Patient.PhoneNumber != null)
+            //    document.Add(new Paragraph($"Patient phone number: {admission.Patient.PhoneNumber}"));
+            //document.Add(new Paragraph($"Doctor full name: {admission.Doctor.Name} {admission.Doctor.Surname}"));
+            //document.Add(new Paragraph($"Doctor title: {admission.Doctor.Title}"));
+            //document.Add(new Paragraph($"Doctor code: {admission.Doctor.Code}"));
+
+            //if (admission.MedicalReportId != null)
+            //{
+            //    var medicalReport = _context.MedicalReports.Find(admission.MedicalReportId);
+            //    document.Add(new Paragraph($"Date and time of medical report creation: {medicalReport.CreationDate}"));
+            //    document.Add(new Paragraph($"Medical report description: {medicalReport.ReportDescription}"));
+            //}
+            //document.Close();
+
+            Paragraph para = new Paragraph("Admission information")
+                        .SetFontSize(20f);
+            para.GetAccessibilityProperties().SetRole(StandardRoles.H1);
+            document.Add(para);
+
+
+            document.Add(new Paragraph($"Admission date and time: {admission.AdmissionDateTime}").SetFontSize(12));
+            if (admission.Urgency) document.Add(new Paragraph($"Urgency: YES").SetFontColor(new iText.Kernel.Colors.DeviceRgb(255, 0, 0)));
+            else document.Add(new Paragraph("Urgency: NO"));
+            document.Add(new LineSeparator(new SolidLine()));
             document.Add(new Paragraph($"Patient full name: {admission.Patient.Name} {admission.Patient.Surname}"));
             document.Add(new Paragraph($"Patient birth date: {admission.Patient.DateOfBirth.ToString("MM/dd/yyyy")}"));
             document.Add(new Paragraph($"Patient gender: {admission.Patient.Gender}"));
@@ -229,20 +261,32 @@ namespace clinic_management_system.Controllers
                 document.Add(new Paragraph($"Patient address: {admission.Patient.Address}"));
             if (admission.Patient.PhoneNumber != null)
                 document.Add(new Paragraph($"Patient phone number: {admission.Patient.PhoneNumber}"));
+            // Dodavanje horizontalne linije
+            document.Add(new LineSeparator(new SolidLine()));
             document.Add(new Paragraph($"Doctor full name: {admission.Doctor.Name} {admission.Doctor.Surname}"));
             document.Add(new Paragraph($"Doctor title: {admission.Doctor.Title}"));
             document.Add(new Paragraph($"Doctor code: {admission.Doctor.Code}"));
-           
+
+            // Dodavanje informacija o medicinskom izvještaju ako postoji
             if (admission.MedicalReportId != null)
             {
                 var medicalReport = _context.MedicalReports.Find(admission.MedicalReportId);
-                document.Add(new Paragraph($"Date and time of medical report creation: {medicalReport.CreationDate}"));
-                document.Add(new Paragraph($"Medical report description: {medicalReport.ReportDescription}"));
+                document.Add(new LineSeparator(new SolidLine()));
+                document.Add(new Paragraph($"Medical report description:"));
+                document.Add(new Paragraph($"{medicalReport.ReportDescription}")
+                    .SetBackgroundColor(new iText.Kernel.Colors.DeviceRgb(242, 242, 242)));
+                document.Add(new Paragraph($"Date and time of medical report creation: {medicalReport.CreationDate}")
+                    .SetItalic());
+            }
+            else
+            {
+                document.Add(new LineSeparator(new SolidLine()));
+                document.Add(new Paragraph("Medical Report is not written for this admission"));
             }
             document.Close();
 
             // Vraćanje PDF-a kao File rezultata
-            return File(memoryStream.ToArray(), "application/pdf", "Podaci_o_prijemu.pdf");
+            return File(memoryStream.ToArray(), "application/pdf", "Admission_information.pdf");
         }
 
         private bool AdmissionExists(int id)
