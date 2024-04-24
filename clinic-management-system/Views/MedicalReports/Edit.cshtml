@@ -2,10 +2,75 @@
 
 @{
     ViewData["Title"] = "Edit";
+    var admission = ViewData["Admission"] as Admission;
 }
 
 <h4>MedicalReport</h4>
 <hr />
+
+<div class="row">
+    <div class="col-sm-6">
+
+        <dl class="row">
+            <dt class="col-sm-4">
+                Patient name:
+            </dt>
+            <dd class="col-sm-8">
+                @admission.Patient.Name
+            </dd>
+            <dt class="col-sm-4">
+                Patient surname:
+            </dt>
+            <dd class="col-sm-8">
+                @admission.Patient.Surname
+            </dd>
+            <dt class="col-sm-4">
+                Patient gender:
+            </dt>
+            <dd class="col-sm-8">
+                @admission.Patient.Gender
+            </dd>
+            <dt class="col-sm-4">
+                Patient birth date:
+            </dt>
+            <dd class="col-sm-8">
+                @admission.Patient.DateOfBirth.ToString("MM/dd/yyyy")
+            </dd>
+        </dl>
+    </div>
+
+    <div class="col-sm-6">
+
+        <dl class="row">
+            <dt class="col-sm-4">
+                Doctor name:
+            </dt>
+            <dd class="col-sm-8">
+                @admission.Doctor.Name
+            </dd>
+            <dt class="col-sm-4">
+                Doctor surname:
+            </dt>
+            <dd class="col-sm-8">
+                @admission.Doctor.Surname
+            </dd>
+            <dt class="col-sm-4">
+                Doctor title:
+            </dt>
+            <dd class="col-sm-8">
+                @admission.Doctor.Title
+            </dd>
+            <dt class="col-sm-4">
+                Doctor code:
+            </dt>
+            <dd class="col-sm-8">
+                @admission.Doctor.Code
+            </dd>
+        </dl>
+    </div>
+</div>
+<hr />
+
 <div class="row">
     <div class="col-md-6">
         <form asp-action="Edit">
@@ -14,7 +79,7 @@
             <input type="hidden" asp-for="AdmissionId" />
             <div class="form-group">
                 <label asp-for="ReportDescription" class="control-label"></label>
-                <textarea asp-for="ReportDescription" class="form-control mb-2" rows="8"></textarea>
+                <textarea asp-for="ReportDescription" class="form-control mb-2" rows="7"></textarea>
                 <span asp-validation-for="ReportDescription" class="text-danger"></span>
             </div>
             <div class="form-group">

@@ -57,9 +57,15 @@ namespace clinic_management_system.Controllers
         // GET: MedicalReports/Create
         public IActionResult Create(int id)
         {
-            var admission = _context.Admissions.Find(id);
+            var admission = _context.Admissions
+                .Include(a => a.Patient)
+                .Include(a => a.Doctor)
+                .FirstOrDefault(a => a.Id == id);
+            if (admission == null)
+            {
+                return NotFound();
+            }
             ViewData["Admission"] = admission;
-            //ViewData["AdmissionId"] = new SelectList(_context.Admissions, "Id", "Id", medicalReport.AdmissionId);
             return View();
         }
 
@@ -100,7 +106,16 @@ namespace clinic_management_system.Controllers
             {
                 return NotFound();
             }
-            //ViewData["AdmissionId"] = new SelectList(_context.Admissions, "Id", "Id", medicalReport.AdmissionId);
+
+            var admission = await _context.Admissions
+                .Include(a => a.Patient)
+                .Include(a => a.Doctor)
+                .FirstOrDefaultAsync(a => a.Id == medicalReport.AdmissionId);
+            if (admission == null)
+            {
+                return NotFound();
+            }
+            ViewData["Admission"] = admission;
             return View(medicalReport);
         }
 
