@@ -13,17 +13,21 @@ async function filterAdmissions() {
     }
 
     const data = await response.json();
+    console.log(data);
 
     let tbody = document.getElementById("filterTable");
     tbody.innerHTML = "";
 
     data.forEach(admission => {
-        const date = admission.admissionDateTime;
+        const date = new Date(admission.admissionDateTime);
+
+        const formatedDate = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear() + ' ' + ('0' + date.getHours()).slice(-2) + ':' + ('0' + date.getMinutes()).slice(-2) + ':' + ('0' + date.getSeconds()).slice(-2);
+
 
         tbody.innerHTML += `<tr><td>${admission.patient.name} ${admission.patient.surname}</td>
-        <td>${date}</td>
+        <td>${formatedDate}</td>
         <td>${admission.doctor.name} ${admission.doctor.surname} - ${admission.doctor.code}</td>
-        <td>${admission.urgency}</td>
+        <td><input type="checkbox" disabled ${admission.urgency ? 'checked="checked"' : ""}</td>
         <td>
         <a href="/Admissions/Edit/${admission.id}">Edit</a> |
         <a href="/Admissions/Delete/${admission.id}">Delete</a> |
